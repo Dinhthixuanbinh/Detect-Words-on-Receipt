@@ -2,6 +2,7 @@ import cv2
 import os
 from config import get_args
 import pytesseract
+from PIL import Image
 
 args = get_args()
 
@@ -22,15 +23,22 @@ class ExtractingText:
                 words.append(text)
         return words
 
-    def TesseractOCR(self, dtset, languages, de_prob=0.5):
-        char_pos = []
+    def Tesseract(self, dtset, min_length):
+        char = []
         for idx in dtset:
-            img_file = os.path.join(args.data_path, os.path.basename(idx))
-            img = cv2.imread(img_file)
-            ocr_results = pytesseract.image_to_string(img, lang=languages, config='--psm 11')
-            bboxes = self.get_results(ocr_results, de_prob)
-            char_pos.append([idx, bboxes])
-        return char_pos
+        z = []
+        image = Image.open(os.path.join(args.data_path, idx))
+        data = pytesseract.image_to_data(image, 
+                                                 output_type=pytesseract.Output.DICT)
+
+        for i in range(len(data['text'])):
+            text = data['text'][i]
+            text = self.cleanup_text(text)
+            if len(text) < min_length: continue
+            z.append([text])
+                    
+            char.append([idx, z])   
+        return char
 '''
 import cv2
 import os

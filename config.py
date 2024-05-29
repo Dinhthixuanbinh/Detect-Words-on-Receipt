@@ -6,7 +6,7 @@ def get_args():
     parser = argparse.ArgumentParser(description='BERT Sentiment Analysis')
 
     # Model hyperparameters
-    parser.add_argument('--model_name', type=str, default='bert-base-uncased', help='Pre-trained BERT model name')
+    parser.add_argument('--model_name', type=str, default='distilbert-base-uncased', help='Pre-trained BERT model name')
     parser.add_argument('--num_labels', type=int, default=5, help='Number of labels in the classification task')
 
     # Training hyperparameters

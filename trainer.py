@@ -1,5 +1,5 @@
 import torch
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from sentiment_dataset import SentimentDataset
@@ -13,8 +13,8 @@ class Trainer:
         self.device = args.device
         self.batch_size = args.batch_size
         self.num_epochs = args.num_epochs
-        self.tokenizer = BertTokenizer.from_pretrained(model_name)
-        self.model = BertForSequenceClassification.from_pretrained(model_name, num_labels=args.num_labels)
+        self.tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+        self.model = DistilBertForSequenceClassification.from_pretrained(model_name, num_labels=args.num_labels)
         self.model = self.model.to(device)
         self.criterion = torch.nn.CrossEntropyLoss()
         self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=args.learning_rate)

@@ -13,7 +13,7 @@ def main():
     trainer = Trainer(args.model_name, args.device, args.batch_size, args.num_epochs)
 
     # Load data
-    word_position = extracting_text.TesseractOCR(sorted(os.listdir(args.data_path)),'en', de_prob=0.4)
+    word_position = extracting_text.Tesseract(sorted(os.listdir(args.data_path)),'en', de_prob=0.4)
 
     # Preprocess data
     train_ds, val_ds = cleaning_data.get_data(args.xml_path, word_position, split_rate=0.4)
